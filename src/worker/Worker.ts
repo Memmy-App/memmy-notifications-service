@@ -12,6 +12,10 @@ export class Worker {
   public readonly interval: number;
   private readonly instance: string;
   private accounts: Account[] | undefined;
+  private readonly isWorking: boolean = true;
+
+  private fetchInterval: NodeJS.Timeout | undefined;
+  private workInterval: NodeJS.Timeout | undefined;
 
   constructor(instance, interval) {
     this.instance = instance;
@@ -122,7 +126,7 @@ export class Worker {
     void this.loadAccounts();
 
     // Load the accounts every minute
-    setInterval(() => {
+    this.fetchInterval = setInterval(() => {
       void this.loadAccounts();
     }, 60 * 1000);
   }
@@ -132,8 +136,13 @@ export class Worker {
     void this.work();
 
     // Do the work every X seconds
-    setInterval(() => {
+    this.workInterval = setInterval(() => {
       void this.work();
     }, this.interval * 1000);
+  }
+
+  public quit(): void {
+    clearInterval(this.fetchInterval);
+    clearInterval(this.workInterval);
   }
 }

@@ -81,6 +81,9 @@ const setupWorkers = async (): Promise<void> => {
     // If we need to we will add workers
 
     if (currentInstance == null || allowedInterval < currentInstance.interval) {
+      // Clear old intervals if needed
+      currentInstance?.quit();
+
       // Create a new worker
       const newWorker = new Worker(row.instance, allowedInterval);
 
