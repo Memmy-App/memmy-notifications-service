@@ -85,13 +85,13 @@ export class Worker {
 
     // Configure the notification
     notification.expiry = Math.floor(Date.now() / 1000) + 3600;
-    notification.badge = 1;
     notification.sound = 'ping.aiff';
-    notification.alert = `${reply.senderName} said: ${reply.content}`;
+    notification.alert = {
+      title: `${reply.senderName} replied to you`,
+      body: reply.content,
+    };
     notification.payload = reply;
     notification.topic = 'com.gkasdorf.memmyapp';
-
-    console.log(account.tokens);
 
     // Send the notification to all tokens
     void apnProvider
@@ -114,9 +114,7 @@ export class Worker {
     if (this.accounts == null || this.accounts.length < 1) return undefined;
 
     // Get the next account
-    const account = this.accounts.pop();
-
-    return account;
+    return (account = this.accounts.pop());
   }
 
   private async startFetching(): Promise<void> {
