@@ -73,7 +73,7 @@ const setupWorkers = async (): Promise<void> => {
     // Get the workers
     const currentInstance = workers.get(row.instance);
     // Get the needed interval
-    const neededInterval = 11 - Math.floor(Math.ceil(row.cnt / 10) * 0.1);
+    const neededInterval = (11 - Math.ceil(row.cnt / 10)) * 0.1;
     // Get the lowest allowed interval
     const allowedInterval = Math.max(neededInterval, MIN_INTERVAL);
     // Get the number of current workers
