@@ -114,7 +114,7 @@ export class Worker {
     if (this.accounts == null || this.accounts.length < 1) return undefined;
 
     // Get the next account
-    return (account = this.accounts.pop());
+    return this.accounts.pop();
   }
 
   private async startFetching(): Promise<void> {
