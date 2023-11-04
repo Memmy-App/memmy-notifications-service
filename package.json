@@ -27,7 +27,8 @@
 				"typeorm-naming-strategies": "^4.1.0"
 		},
 		"scripts": {
-				"build": "npx tsc -w",
+				"build" : "npx tsc",
+				"watch": "npx tsc -w",
 				"typeorm": "typeorm-ts-node-commonjs",
 				"start": "node build/index.js"
 		}
