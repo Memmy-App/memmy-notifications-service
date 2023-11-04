@@ -12,7 +12,6 @@ export class Worker {
   public readonly interval: number;
   private readonly instance: string;
   private accounts: Account[] | undefined;
-  private readonly isWorking: boolean = true;
 
   private fetchInterval: NodeJS.Timeout | undefined;
   private workInterval: NodeJS.Timeout | undefined;
@@ -69,7 +68,7 @@ export class Worker {
     const lastReply = await getLastReply(account.instance, account.authToken);
 
     // If there's no last reply then we don't need to do anything.
-    if (lastReply == null || lastReply.commentId === account.lastNotifiedId) {
+    if (lastReply == null || lastReply.commentId <= account.lastNotifiedId) {
       await dataSource.manager.save(account);
       return;
     }
